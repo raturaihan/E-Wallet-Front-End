@@ -27,3 +27,13 @@ export const BlueButton = styled.button({
     borderRadius: '8px',
     backgroundColor: '#4ea5ea'
 })
+
+export const ModalButton = styled.button({
+    border: '1px solid #4ea5ea',
+    backgroundColor: 'white', 
+    borderRadius: '8px',
+    height: '45px',
+    width: '80px',
+    color: '#4ea5ea',
+    fontWeight: 'bold'
+})
