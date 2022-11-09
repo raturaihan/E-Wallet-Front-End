@@ -17,7 +17,12 @@ export interface ITransaction {
 }
 
 export interface ITransfer {
-    transferTo: string,
-    transferAmount: number, 
-    transferDescription: string,
+    to: string,
+    amount: number, 
+    description?: string,
+}
+
+export interface ITopup {
+    amount: number, 
+    source_of_fund_id: number
 }

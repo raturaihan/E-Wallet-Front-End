@@ -54,9 +54,7 @@ instance.interceptors.response.use(
             localStorage.clear();
             throw new axios.Cancel('Logged Out');
         }else {
-            throw handleHTTPResponse(
-                String(err.response.status), error && error.message
-            );
+            throw err;
         }
     }
 )

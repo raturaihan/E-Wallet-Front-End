@@ -15,11 +15,8 @@ function Home() {
 
   useEffect(() => {
     dispatch(getProfileUser())
-  }, [dispatch]);
-
-  useEffect(() => {
     dispatchTrans(getAllTransactions())
-  }, [dispatchTrans]);
+  }, [dispatch, dispatchTrans]);
 
   return (
     <div>
