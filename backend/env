@@ -1,0 +1,10 @@
+HOST=localhost
+PORT=8080
+DB_USER=db_user
+DB_PASS=db_password
+DB_NAME=db_name
+
+ISSUER=issuerforjwt
+EXP_MIN=10
+SECRET_KEY=somuchsecret
+
