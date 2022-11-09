@@ -1,7 +1,7 @@
 import { ThunkDispatch } from "redux-thunk";
-import { IUser } from "../../interface";
+import { ITransaction, IUser } from "../../interface";
 import { AnyAction } from "redux";
-import { IUserState } from "../reducers/typesReducers";
+import { ITransactionState, IUserState } from "../reducers/typesReducers";
 
 export enum UserActionType {
     SET_USER = "SET_USER",
@@ -26,3 +26,26 @@ export interface ISetUserError {
 
 export type UsersAction = ISetUser | ISetUserLoading | ISetUserError
 export type UsersDispatch = ThunkDispatch<IUserState, any, AnyAction>
+
+export enum TransactionsActionType {
+    SET_TRANSACTIONS = "SET_TRANSACTIONS",
+    SET_TRANSACTIONS_LOADING = "SET_TRANSACTIONS_LOADING",
+    SET_TRANSACTIONS_ERROR = "SET_TRANSACTIONS_ERROR",
+}
+export interface ISetTransactions {
+    type: TransactionsActionType.SET_TRANSACTIONS;
+    payload: ITransaction[]
+}
+
+export interface ISetTransactionsLoading {
+    type: TransactionsActionType.SET_TRANSACTIONS_LOADING;
+    payload: boolean
+}
+
+export interface ISetTransactionsError {
+    type: TransactionsActionType.SET_TRANSACTIONS_ERROR;
+    payload: string | null
+}
+
+export type TransactionsAction = ISetTransactions | ISetTransactionsLoading | ISetTransactionsError
+export type TransactionsDispatch = ThunkDispatch<ITransactionState, any, AnyAction>
