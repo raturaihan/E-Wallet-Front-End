@@ -26,7 +26,7 @@ function Topup() {
                         type="number" 
                         className='"form-control'
                         id="topupTo"
-                        required
+                        disabled
                     />
                 </div>
                 <div className='row mt-3'>

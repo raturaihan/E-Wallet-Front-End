@@ -4,8 +4,8 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Topup from './pages/Topup';
 import Transfer from './pages/Transfer';
-import Navbar from './components/Navbar';
 import Home from './pages/Home';
+import ProtectedRoutes from './routes/ProtectedRoute';
 
 function App() {
 
@@ -14,9 +14,11 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/topup" element={<Topup />} />
-        <Route path="/transfer" element={<Transfer />} />
-        <Route path="/home" element={<Home />} />
+        <Route element={<ProtectedRoutes />}>
+          <Route path="/home" element={<Home />} />
+          <Route path="/topup" element={<Topup />} />
+          <Route path="/transfer" element={<Transfer />} />
+        </Route>
       </Routes>
     </div>
   )

@@ -1,12 +1,13 @@
 import React from 'react'
+import { IUser } from '../interface'
 
-function HomeProfile() {
+function HomeProfile({name, wallet_number, balance}: IUser) {
   return (
     <div>
         <div className='container'>
             <div className='row'>
-                <h1 className='fw-bold'>Good Morning, Asep!</h1>
-                <h5>Acount: 123456789</h5>
+                <h1 className='fw-bold'>Good Morning, {name}!</h1>
+                <h5>Acount: {wallet_number}</h5>
             </div>
             <div className='row'>
                 <div className='d-flex justify-content-end gap-5'>
@@ -15,7 +16,7 @@ function HomeProfile() {
             </div>
             <div className='row'>
                 <div className='d-flex justify-content-end gap-5'>
-                    <h1 className='fw-bold'>IDR 12000000</h1>
+                    <h1 className='fw-bold'>IDR {balance}</h1>
                 </div>
             </div>
         </div>
