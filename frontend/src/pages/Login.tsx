@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import {Link} from 'react-router-dom'
 import {InputForm, BlueButton} from '../styles/Styled'
 import {useNavigate} from 'react-router-dom'
-import axios from 'axios'
+import instance from '../config/axios'
 
 function Login() {
   const navigate = useNavigate()
@@ -15,21 +15,11 @@ function Login() {
     event.preventDefault();
 
     try {
-        let user = await axios.post("http://localhost:8080/login", {
+        let user = instance.post("http://localhost:8080/login", {
             email: input.email,
             password: input.password
         }); 
-        if(!user.data.is_error) {
-            console.log(user.data.id_token)
-            localStorage.setItem('token', user.data.data.id_token);
-            navigate('/home', {replace: true});
-        }else if (user.data.code == 400){
-            alert('invalid email')
-        }else if (user.data.code == 403){
-            alert('invalid password ')
-        }else{
-            alert('user not found')
-        }
+        navigate('/home', {replace: true});
     }catch(error) {
         console.log(error)
     }
