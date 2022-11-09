@@ -1,8 +1,34 @@
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import Navbar from '../components/Navbar'
+import { ITopup } from '../interface';
+import { postTopup } from '../redux/actions/topupActions';
+import { TopupDispatch } from '../redux/actions/typesActions';
+import { RootState } from '../redux/reducers/indexReducers';
 import {InputForm, BlueButton, AmountForm, SelectForm} from '../styles/Styled'
 
 function Topup() {
+  const {user} = useSelector((state: RootState) => state.userReducer);
+  const dispatch: TopupDispatch = useDispatch()
+
+  interface IFormTopupElements extends HTMLFormControlsCollection {
+    source_of_fund_id: number;
+    topupAmount: number;
+  }
+
+  interface IFormTopup extends HTMLFormElement {
+    readonly elements: IFormTopupElements
+  }
+
+  const handleSubmit = (event: React.FormEvent<IFormTopup>) => {
+    event.preventDefault()
+    const topupData: ITopup = {
+        amount: parseInt(event.currentTarget.topupAmount.value),
+        source_of_fund_id: parseInt(event.currentTarget.source_of_fund_id.value)
+    }; 
+    dispatch(postTopup(topupData))
+  }
+
   return (
     <div>
         <Navbar />
@@ -10,14 +36,14 @@ function Topup() {
             <div className='mt-5'>
                 <h1 className='fw-bold fs-1'>Top Up</h1>
             </div>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <div className='row mt-5'>
                     <label htmlFor="email" className='form-label fw-bold'>From</label><br />
-                    <SelectForm className="form-select" id="selectSource">
+                    <SelectForm className="form-select" id="source_of_fund_id">
                       <option selected>Choose...</option>
-                      <option value="1">Bank Transfer</option>
-                      <option value="2">Visa Card</option>
-                      <option value="3">Cash</option>
+                      <option value={1}>Bank Transfer</option>
+                      <option value={2}>Visa Card</option>
+                      <option value={3}>Cash</option>
                     </SelectForm>
                 </div>
                 <div className='row mt-3'>
@@ -26,6 +52,7 @@ function Topup() {
                         type="number" 
                         className='"form-control'
                         id="topupTo"
+                        value={user.wallet_number}
                         disabled
                     />
                 </div>

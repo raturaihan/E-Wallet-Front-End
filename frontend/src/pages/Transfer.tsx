@@ -62,7 +62,7 @@ function Transfer() {
                 <div className='row mt-3'>
                     <label htmlFor="transferAmount" className='form-label fw-bold'>Amount</label> <br />
                     <AmountForm
-                        name='transferamount' 
+                        name='transferAmount' 
                         type="number" 
                         className='"form-control'
                         id="transferAmount"
