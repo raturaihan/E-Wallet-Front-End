@@ -37,7 +37,11 @@ function Home() {
                 balance={formatBalance(user.balance)}/>
             </div>
             <div className='row mt-5'>
-              {transactions && <TableData />}
+              {transactions ? (<TableData />):(
+                <div className='d-flex justify-content-center'>
+                  <h1>No Transaction Yet</h1>
+                </div>
+              )}
             </div>
         </div>
     </div>
