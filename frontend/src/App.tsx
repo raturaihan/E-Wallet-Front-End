@@ -6,6 +6,8 @@ import Topup from './pages/Topup';
 import Transfer from './pages/Transfer';
 import Home from './pages/Home';
 import ProtectedRoutes from './routes/ProtectedRoute';
+import ModalFailed from './components/ModalFailed';
+import TableData from './components/TableData';
 
 function App() {
 

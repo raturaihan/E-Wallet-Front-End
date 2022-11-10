@@ -1,17 +1,16 @@
 import React from 'react'
 import {ModalButton} from '../styles/Styled'
+import {Link} from 'react-router-dom'
+import {InputForm, BlueButton, AmountForm, SelectForm} from '../styles/Styled'
 
 interface modalFailedDetails{
     transType: string, 
-    error: string
+    error: string | null
 }
 
 function ModalFailed({transType, error}: modalFailedDetails) {
   return (
     <div>
-         <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            Launch demo modal
-        </button>
         <div className="modal fade" id="exampleModal" tabIndex={-1} aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div className="modal-dialog">
                 <div className="modal-content">
@@ -34,7 +33,9 @@ function ModalFailed({transType, error}: modalFailedDetails) {
                         </div>
                         <div className='row my-3'>
                             <div className='d-flex justify-content-center gap-4'>
-                                <ModalButton type="button" className="btn" data-bs-dismiss="modal">Close</ModalButton>
+                                <Link to={'/home'} className='text-decoration-none'>
+                                    <ModalButton type="button" className="btn" data-bs-dismiss="modal">Close</ModalButton>
+                                </Link>
                             </div>
                         </div>
                     </div>

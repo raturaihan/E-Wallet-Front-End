@@ -30,7 +30,9 @@ export const postTopup = (payload: ITopup) => {
             }
             return response.data
         })
-        .catch((error) => dispatch(setTopupError(error)))
+        .catch((error) => {
+            dispatch(setTopupError(error.response.data.message))
+        })
         .finally(() => dispatch(setTopupLoading(false)));
     }   
 }

@@ -1,36 +1,51 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import ModalFailed from '../components/ModalFailed'
+import ModalSuccess from '../components/ModalSuccess'
 import Navbar from '../components/Navbar'
 import { ITransfer } from '../interface'
 import { postTransfer } from '../redux/actions/transferActions'
-import { TransferDispatch } from '../redux/actions/typesActions'
+import { TransferDispatch, UsersDispatch } from '../redux/actions/typesActions'
+import { getProfileUser } from '../redux/actions/userActions'
 import { RootState } from '../redux/reducers/indexReducers'
 import {InputForm, BlueButton, AmountForm, SelectForm} from '../styles/Styled'
 
 function Transfer() {
   const {user} = useSelector((state: RootState) => state.userReducer);
+  const {transferError} = useSelector((state: RootState) => state.transferReducer);
+  const dispatchUser: UsersDispatch= useDispatch()
   const dispatch: TransferDispatch = useDispatch()
+  console.log(transferError)
 
-  interface IFormTransferElements extends HTMLFormControlsCollection {
-    transferTo: string;
-    transferAmount: number;
-    description: string;
-  }
+  useEffect(() => {
+    dispatchUser(getProfileUser())
+  }, [dispatchUser]);
 
-  interface IFormTransfer extends HTMLFormElement {
-    readonly elements: IFormTransferElements
-  }
+  const [input, setInput] = useState({
+    transferTo: "",
+    description: ""
+  })
 
-  const handleSubmit = (event: React.FormEvent<IFormTransfer>) => {
-    console.log(event.currentTarget.transferTo.value)
+  const [inputAmount, setInputAmount] = useState(0)
+
+  const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
+    setInput({
+      ...input,
+      [event.currentTarget.name]: event.currentTarget.value,
+      });
+  };
+
+  const handleSubmit = (
+    event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         const transferData: ITransfer = {
-            to: event.currentTarget.transferTo.value.toString(),
-            amount: parseInt(event.currentTarget.transferAmount.value), 
-            description: event.currentTarget.description.value,
+            to: input.transferTo,
+            amount: inputAmount, 
+            description: input.description,
         };
         dispatch(postTransfer(transferData))
     }
+
   return (
     <div>
       <Navbar />
@@ -56,6 +71,7 @@ function Transfer() {
                         type="number" 
                         className='"form-control'
                         id="transferTo"
+                        onChange={handleChange}
                         required
                     />
                 </div>
@@ -66,6 +82,7 @@ function Transfer() {
                         type="number" 
                         className='"form-control'
                         id="transferAmount"
+                        onChange={e => setInputAmount(e.target.valueAsNumber)}
                         required
                     />
                 </div>
@@ -76,11 +93,23 @@ function Transfer() {
                         name='description'
                         className='form-control'
                         id="description"
+                        onChange={handleChange}
                         required
                     />
                 </div>
             <div className='row mt-4'>
-                <BlueButton type="submit">Send</BlueButton>
+                <BlueButton type="submit" data-bs-toggle="modal" data-bs-target="#exampleModal">Send</BlueButton>
+                {/* <ModalFailed transType='tes' error={transferError}/> */}
+                {transferError !== null ? 
+                  <ModalFailed 
+                    transType='Transfer'
+                    error={transferError}/> 
+                    : <ModalSuccess 
+                    typeTrans='Transfer'
+                    amount={inputAmount}
+                    from={user.wallet_number}
+                    to={input.transferTo}
+                    description={input.description}/>}
             </div>
             </form>
         </div>

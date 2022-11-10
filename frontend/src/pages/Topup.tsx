@@ -1,32 +1,46 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
+import ModalFailed from '../components/ModalFailed';
+import ModalSuccess from '../components/ModalSuccess';
 import Navbar from '../components/Navbar'
 import { ITopup } from '../interface';
 import { postTopup } from '../redux/actions/topupActions';
-import { TopupDispatch } from '../redux/actions/typesActions';
+import { TopupDispatch, UsersDispatch } from '../redux/actions/typesActions';
+import { getProfileUser } from '../redux/actions/userActions';
 import { RootState } from '../redux/reducers/indexReducers';
 import {InputForm, BlueButton, AmountForm, SelectForm} from '../styles/Styled'
 
 function Topup() {
   const {user} = useSelector((state: RootState) => state.userReducer);
+  const {topup, topupError, topupLoading} = useSelector((state: RootState) => state.topupReducer);
+  const dispatchUser: UsersDispatch= useDispatch()
+  console.log(topupError !== null)
+  useEffect(() => {
+    dispatchUser(getProfileUser())
+  }, [dispatchUser]);
+
   const dispatch: TopupDispatch = useDispatch()
+  const [inputAmount, setInputAmount] = useState(0)
+  const [inputSelect, setInputSelect] = useState(0)
 
-  interface IFormTopupElements extends HTMLFormControlsCollection {
-    source_of_fund_id: number;
-    topupAmount: number;
-  }
+  const handleSubmit = (
+    event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault()
+        const topupData: ITopup = {
+          amount: inputAmount, 
+          source_of_fund_id: inputSelect
+        };
+        dispatch(postTopup(topupData))
+    }
 
-  interface IFormTopup extends HTMLFormElement {
-    readonly elements: IFormTopupElements
-  }
-
-  const handleSubmit = (event: React.FormEvent<IFormTopup>) => {
-    event.preventDefault()
-    const topupData: ITopup = {
-        amount: parseInt(event.currentTarget.topupAmount.value),
-        source_of_fund_id: parseInt(event.currentTarget.source_of_fund_id.value)
-    }; 
-    dispatch(postTopup(topupData))
+  function descriptionModal(input:number){
+    if (inputSelect === 1) {
+      return "Top Up From Bank Transfer"
+    } else if (inputSelect === 2) {
+      return "Top Up From Visa Card"
+    } else if (inputSelect === 3) {
+      return "Top Up From Cash"
+    }
   }
 
   return (
@@ -39,7 +53,8 @@ function Topup() {
             <form onSubmit={handleSubmit}>
                 <div className='row mt-5'>
                     <label htmlFor="email" className='form-label fw-bold'>From</label><br />
-                    <SelectForm className="form-select" id="source_of_fund_id">
+                    <SelectForm className="form-select" id="source_of_fund_id"
+                      onChange={e => setInputSelect(parseInt(e.target.value))}>
                       <option selected>Choose...</option>
                       <option value={1}>Bank Transfer</option>
                       <option value={2}>Visa Card</option>
@@ -62,11 +77,22 @@ function Topup() {
                         type="number" 
                         className='"form-control'
                         id="topupAmount"
+                        onChange={e => setInputAmount(e.target.valueAsNumber)}
                         required
                     />
                 </div>
             <div className='row mt-4'>
-                <BlueButton type="submit">Top Up</BlueButton>
+                <BlueButton type="submit" data-bs-toggle="modal" data-bs-target="#exampleModal">Top Up</BlueButton>
+                {topupError !== null ? 
+                  <ModalFailed 
+                    transType='Top Up'
+                    error={topupError}/> 
+                    : <ModalSuccess 
+                    typeTrans='Top Up'
+                    amount={inputAmount}
+                    from={'100'+inputSelect}
+                    to={user.wallet_number}
+                    description={descriptionModal(inputSelect)}/>}
             </div>
             </form>
         </div>

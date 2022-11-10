@@ -30,7 +30,7 @@ export const postTransfer = (payload: ITransfer) => {
             }
             return response.data
         })
-        .catch((error) => dispatch(setTransferError(error)))
+        .catch((error) => dispatch(setTransferError(error.response.data.message)))
         .finally(() => dispatch(setTransferLoading(false)));
     }   
 }

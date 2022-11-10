@@ -31,7 +31,8 @@ export const getAllTransactions = () => {
             return response.data
         })
         .then((data) => {
-            dispatch(getTransactions(data))
+            console.log(getTransactions(data.data))
+            dispatch(getTransactions(data.data))
         })
         .catch((error) => dispatch(getTransactionsError(error)))
         .finally(() => dispatch(getTransactionsLoading(false)));

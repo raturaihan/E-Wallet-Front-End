@@ -1,21 +1,19 @@
 import React from 'react'
 import {ModalButton} from '../styles/Styled'
+import {Link} from 'react-router-dom'
 
 interface modalSuccessDetails {
     typeTrans: string,
     amount: number,
     from: string,
     to: string,
-    description: string
+    description?: string
 }
 
 
 function ModalSuccess({typeTrans, amount, from, to, description}:modalSuccessDetails) {
   return (
     <div>
-        <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            Launch demo modal
-        </button>
         <div className="modal fade" id="exampleModal" tabIndex={-1} aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div className="modal-dialog">
                 <div className="modal-content">
@@ -56,10 +54,12 @@ function ModalSuccess({typeTrans, amount, from, to, description}:modalSuccessDet
                             </div>
                         </div>
                         <div className='row my-3'>
-                            <div className='d-flex justify-content-center gap-4'>
-                                <ModalButton type="button" className="btn" data-bs-dismiss="modal">Print</ModalButton>
-                                <ModalButton type="button" className="btn">Close</ModalButton>
-                            </div>
+                            <Link to={'/home'} className='text-decoration-none'>
+                                <div className='d-flex justify-content-center gap-4'>
+                                    <ModalButton type="button" className="btn" data-bs-dismiss="modal">Print</ModalButton>
+                                    <ModalButton type="button" className="btn" data-bs-dismiss="modal">Close</ModalButton>
+                                </div>
+                            </Link>
                         </div>
                     </div>
                 </div>
