@@ -15,12 +15,13 @@ function Login() {
     event.preventDefault();
 
     try {
-        let user = instance.post("http://localhost:8080/login", {
+        let user = await instance.post("http://localhost:8080/login", {
             email: input.email,
             password: input.password
         }); 
-        navigate('/home', {replace: true});
+        navigate('/', {replace: true});
     }catch(error) {
+        alert(error)
         console.log(error)
     }
   }

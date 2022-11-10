@@ -57,8 +57,7 @@ function Topup() {
                 <div className='row mt-5'>
                     <label htmlFor="email" className='form-label fw-bold'>From</label><br />
                     <SelectForm className="form-select" id="source_of_fund_id"
-                      onChange={e => setInputSelect(parseInt(e.target.value))}>
-                      <option selected>Choose...</option>
+                      onChange={e => setInputSelect(parseInt(e.target.value))} value={inputSelect}>
                       <option value={1}>Bank Transfer</option>
                       <option value={2}>Visa Card</option>
                       <option value={3}>Cash</option>

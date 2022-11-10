@@ -22,7 +22,7 @@ function TableData() {
   console.log(transactions)
 
   function FilterShow(data: ITransaction[]) {
-    let filteredData
+    let filteredData=[];
     switch(selectShowType){
         case "last-10-transactions":
             filteredData = data.slice(0,10);
@@ -47,7 +47,7 @@ function TableData() {
   }
 
   function FilterSortDate(data: ITransaction[]) {
-    let sortedData
+    let sortedData=[];
     switch(selectSortType){
         case "ascending":
             sortedData = data.sort((a, b) => moment(a.date).isAfter(moment(b.date))?1:-1);
@@ -62,17 +62,29 @@ function TableData() {
   }
 
   function FilterSortAmount(data: ITransaction[]) {
-    let sortedData
+    let sortedData=[];
     switch(selectSortType){
         case "ascending":
-            sortedData = data.sort((a, b) => a.amount - b.amount);
+            sortedData = data.sort((a, b) =>{
+                let amount1: number = (a.status === "INCOME"? 1 : (-1))*a.amount;
+                let amount2: number = (b.status === "INCOME"? 1 : (-1))*b.amount;
+                return amount1 - amount2
+            });
             return sortedData;
         case "descending":
-            sortedData = data.sort((a, b) =>  b.amount - a.amount);
+            sortedData = data.sort((a, b) =>{
+                let amount1: number = (a.status === "INCOME"? 1 : (-1))*a.amount;
+                let amount2: number = (b.status === "INCOME"? 1 : (-1))*b.amount;
+                return amount2 - amount1
+            });
             return sortedData;
         default:
-            sortedData = data.sort((a, b) =>  b.amount - a.amount);
-            return sortedData;
+            sortedData = data.sort((a, b) =>{
+                let amount1: number = (a.status === "INCOME"? 1 : (-1))*a.amount;
+                let amount2: number = (b.status === "INCOME"? 1 : (-1))*b.amount;
+                return amount1 - amount2
+            });
+        return sortedData
     }
   }
 
@@ -105,7 +117,8 @@ function TableData() {
     if(transType == "INCOME"){
         return <p className='text-success'>+{amount}</p>
     }else if(transType == "OUTCOME"){
-        return <p className='text-danger'>-{amount}</p>
+        amount = amount * (-1)
+        return <p className='text-danger'>{amount}</p>
     }
   }
 
@@ -168,7 +181,7 @@ function TableData() {
                     {displayData
                     .filter((desc) => desc.description.toLowerCase().includes(searchValue))
                     .map(val => (
-                        <tr>
+                        <tr key={val.id}>
                             <td>{moment(val.date).format('h:mm - D MMMM YYYY')}</td>
                             <td>{formatType(val.status)}</td>
                             <td>{val.sender} / {val.recipient}</td>

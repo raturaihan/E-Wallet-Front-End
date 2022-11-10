@@ -54,7 +54,7 @@ function ModalSuccess({typeTrans, amount, from, to, description}:modalSuccessDet
                             </div>
                         </div>
                         <div className='row my-3'>
-                            <Link to={'/home'} className='text-decoration-none'>
+                            <Link to={'/'} className='text-decoration-none'>
                                 <div className='d-flex justify-content-center gap-4'>
                                     <ModalButton type="button" className="btn" data-bs-dismiss="modal">Print</ModalButton>
                                     <ModalButton type="button" className="btn" data-bs-dismiss="modal">Close</ModalButton>

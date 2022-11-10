@@ -6,21 +6,21 @@ import Topup from './pages/Topup';
 import Transfer from './pages/Transfer';
 import Home from './pages/Home';
 import ProtectedRoutes from './routes/ProtectedRoute';
-import ModalFailed from './components/ModalFailed';
-import TableData from './components/TableData';
+import NotFound from './pages/NotFound';
 
 function App() {
 
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route element={<ProtectedRoutes />}>
-          <Route path="/home" element={<Home />} />
+          <Route path="/" element={<Home />} />
           <Route path="/topup" element={<Topup />} />
           <Route path="/transfer" element={<Transfer />} />
         </Route>
+        <Route path="*" element={<NotFound />}/>
       </Routes>
     </div>
   )

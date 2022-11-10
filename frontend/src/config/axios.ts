@@ -52,7 +52,7 @@ instance.interceptors.response.use(
         const error = err && err.response && err.response.data
         if (error && error.message === 'Invalid credential'){
             localStorage.clear();
-            throw new axios.Cancel('Logged Out');
+            throw new Error('Invalid username or password');
         }else {
             throw err;
         }

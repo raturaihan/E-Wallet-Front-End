@@ -17,7 +17,7 @@ function Navbar() {
             <div className="collapse navbar-collapse p-2 justify-content-end" id="navbarNav">
             <ul className="navbar-nav gap-3">
                 <li className="nav-item">
-                <Link className='text-decoration-none text-secondary' to={'/home'}>Home</Link>
+                <Link className='text-decoration-none text-secondary' to={'/'}>Home</Link>
                 </li>
                 <li className="nav-item">
                 <Link className='text-decoration-none text-secondary' to={'/transfer'}>Transfer</Link>
