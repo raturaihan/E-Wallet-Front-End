@@ -40,7 +40,7 @@ function ModalFailed({ transType, error, show }: modalFailedDetails) {
                         <div className="row mt-3">
                           <div className="d-flex justify-content-center">
                             <h1 className="fw-bold text-danger">
-                              Top Up Failed
+                              {transType} Failed
                             </h1>
                           </div>
                         </div>
