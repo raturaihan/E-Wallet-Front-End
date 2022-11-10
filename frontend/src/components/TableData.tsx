@@ -184,7 +184,7 @@ function TableData() {
                     .filter((desc) => desc.description.toLowerCase().includes(searchValue))
                     .map(val => (
                         <tr key={val.id}>
-                            <td>{moment(val.date).format('h:mm - D MMMM YYYY')}</td>
+                            <td>{moment(val.date).format('HH:mm - D MMMM YYYY')}</td>
                             <td>{formatType(val.status)}</td>
                             <td>{val.sender} / {val.recipient}</td>
                             <td>{val.description}</td>
