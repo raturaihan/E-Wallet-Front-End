@@ -23,7 +23,6 @@ export const BlueButton = styled.button({
     border: 'none', 
     color: 'white', 
     fontWeight: 'bold',
-    width: '385px',
     height: '45px',
     borderRadius: '8px',
     backgroundColor: '#4ea5ea'

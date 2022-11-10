@@ -40,8 +40,10 @@ function Topup() {
       amount: inputAmount,
       source_of_fund_id: inputSelect,
     };
-    dispatchTopup(postTopup(topupData));
-    setModal(true);
+    if(!inputValidation(topupData)){
+      dispatchTopup(postTopup(topupData));
+      setModal(true);
+    }
   };
 
   function descriptionModal(input: number) {
@@ -54,6 +56,31 @@ function Topup() {
     }
   }
 
+  const [inputErrors, setInputErrors] = useState({
+    amount: false,
+    source_of_fund_id: false,
+  })
+
+  const inputValidation = (payload: ITopup) => {
+    let errorState = {
+      amount: false,
+      source_of_fund_id: false,
+    }
+    let errorTotal = false; 
+
+    if (payload.source_of_fund_id === 0) {
+      errorState = {...errorState, source_of_fund_id:true}
+      errorTotal=true;
+    }
+    if (!payload.amount || payload.amount < 50000 || payload.amount > 10000000) {
+      errorState = {...errorState, amount:true}
+      errorTotal=true;
+    }
+
+    setInputErrors(errorState);
+    return errorTotal;
+  }
+
   return (
     <div>
       <Navbar />
@@ -61,7 +88,7 @@ function Topup() {
         <div className="mt-5">
           <h1 className="fw-bold fs-1">Top Up</h1>
         </div>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} noValidate>
           <div className="row mt-5">
             <label htmlFor="email" className="form-label fw-bold">
               From
@@ -81,6 +108,7 @@ function Topup() {
               <option value={3}>Cash</option>
             </SelectForm>
           </div>
+          {inputErrors.source_of_fund_id ? (<span className="text-danger">This Field is Required</span>):(<></>)}
           <div className="row mt-3">
             <label htmlFor="topupTo" className="form-label fw-bold">
               To
@@ -107,6 +135,7 @@ function Topup() {
               required
             />
           </div>
+          {inputErrors.amount ? (<span className="text-danger">Min Amount IDR50.000, Max Amount IDR10.000.000</span>):(<></>)}
           <div className="row mt-4">
             <BlueButton
               type="submit"

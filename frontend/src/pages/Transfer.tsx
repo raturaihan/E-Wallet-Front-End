@@ -45,9 +45,43 @@ function Transfer() {
       amount: inputAmount,
       description: input.description,
     };
-    dispatchTransfer(postTransfer(transferData));
-    setModal(true);
+    if (!inputValidation(transferData)){
+      dispatchTransfer(postTransfer(transferData));
+      setModal(true);
+    }
   };
+
+  const [inputErrors, setInputErrors] = useState({
+    to: false,
+    amount: false,
+    description: false,
+  })
+
+  const inputValidation = (payload: ITransfer) => {
+    let errorState = {
+      to: false,
+      amount: false,
+      description: false,
+    }
+    let errorTotal = false; 
+
+    if (payload.to === "") {
+      errorState = {...errorState, to:true}
+      errorTotal=true;
+    }
+    if (!payload.amount || payload.amount > 50000000 || payload.amount < 1000) {
+      errorState = {...errorState, amount:true}
+      errorTotal=true;
+    }
+    if (payload.description === "") {
+      errorState = {...errorState, description:true}
+      errorTotal=true;
+    }
+
+    setInputErrors(errorState);
+    return errorTotal;
+  }
+
 
   return (
     <div>
@@ -56,7 +90,7 @@ function Transfer() {
         <div className="mt-5">
           <h1 className="fw-bold fs-1">Transfer</h1>
         </div>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} noValidate>
           <div className="row mt-5">
             <label htmlFor="transferFrom" className="form-label fw-bold">
               From
@@ -84,6 +118,7 @@ function Transfer() {
               required
             />
           </div>
+          {inputErrors.to ? (<p className="text-danger">This Field is Required</p>):(<></>)}
           <div className="row mt-3">
             <label htmlFor="transferAmount" className="form-label fw-bold">
               Amount
@@ -98,6 +133,7 @@ function Transfer() {
               required
             />
           </div>
+          {inputErrors.amount ? (<span className="text-danger">Min Amount IDR1.000, Max Amount IDR50.000.000</span>):(<></>)}
           <div className="row mt-3">
             <label htmlFor="description" className="form-label fw-bold">
               Description
@@ -112,6 +148,7 @@ function Transfer() {
               required
             />
           </div>
+          {inputErrors.description ? (<span className="text-danger">This field is required</span>):(<></>)}
           <div className="row mt-4">
             <BlueButton type="submit" data-bs-target="#exampleModal">
               Send
