@@ -13,6 +13,10 @@ import { ModalButton } from "../styles/Styled";
 import { Link } from "react-router-dom";
 
 function Transfer() {
+  const formatBalance = (balance: number) => {
+    return balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  }
+
   const { user } = useSelector((state: RootState) => state.userReducer);
   const { transfer, transferError } = useSelector(
     (state: RootState) => state.transferReducer
@@ -49,9 +53,6 @@ function Transfer() {
     };
     dispatchTransfer(postTransfer(transferData));
     setModal(true);
-    // if (!transferError) {
-    //   setModal(true);
-    // }
   };
 
   return (
@@ -152,7 +153,7 @@ function Transfer() {
                         <div className="row mt-5">
                           <div className="d-flex justify-content-between align-items-center">
                             <p>Amount</p>
-                            <p className="fw-bold fs-3">{inputAmount}</p>
+                            <p className="fw-bold fs-3">{formatBalance(inputAmount)}</p>
                           </div>
                         </div>
                         <div className="row">

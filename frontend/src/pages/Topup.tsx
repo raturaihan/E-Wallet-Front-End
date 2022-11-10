@@ -18,6 +18,10 @@ import { ModalButton } from "../styles/Styled";
 import { Link } from "react-router-dom";
 
 function Topup() {
+  const formatBalance = (balance: number) => {
+    return balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  }
+
   const { user } = useSelector((state: RootState) => state.userReducer);
   const { topup, topupError, topupLoading } = useSelector(
     (state: RootState) => state.topupReducer
@@ -146,7 +150,7 @@ function Topup() {
                         <div className="row mt-5">
                           <div className="d-flex justify-content-between align-items-center">
                             <p>Amount</p>
-                            <p className="fw-bold fs-3">{inputAmount}</p>
+                            <p className="fw-bold fs-3">{formatBalance(inputAmount)}</p>
                           </div>
                         </div>
                         <div className="row">
