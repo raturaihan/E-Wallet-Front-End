@@ -1,5 +1,8 @@
 # Assignment React Starter
 
+## Project Description
+The purpose of this project is to create the front-end implementation of an e-wallet application. 
+
 ## Step to Run the Backend:
 
 0. Go to the backend folder
@@ -23,3 +26,32 @@ chmod +x linux-server
 OR
 
 chmod +x mac-server
+
+## Steps to run the Frontend:
+
+1. Go to the frontend folder (cd frontend)
+
+2. Run: npm install
+
+3. Run: npm run dev
+
+## Completed Requirements:
+
+1. Website Application Navigation
+
+2. Authentication
+
+3. Home Page
+
+4. Top Up Page
+
+5. Transfer Page
+
+## Uncompleted Requirements:
+
+1. Testing
+
+2. Games
+
+
+

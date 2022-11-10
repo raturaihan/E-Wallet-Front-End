@@ -11,7 +11,9 @@ import { RootState } from '../redux/reducers/indexReducers'
 
 function Home() {
   const {user, userLoading, userError} = useSelector((state: RootState) => state.userReducer);
+  const {transactions} = useSelector((state: RootState) => state.transactionsReducer);
   const dispatch: UsersDispatch= useDispatch()
+  const dispatchTrans: TransactionsDispatch = useDispatch()
 
   const formatBalance = (balance: number) => {
     return balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -19,7 +21,8 @@ function Home() {
 
   useEffect(() => {
     dispatch(getProfileUser())
-  }, [dispatch]);
+    dispatchTrans(getAllTransactions())
+  }, [dispatch, dispatchTrans]);
 
   return (
     <div>
@@ -34,7 +37,7 @@ function Home() {
                 balance={formatBalance(user.balance)}/>
             </div>
             <div className='row mt-5'>
-              <TableData />
+              {transactions && <TableData />}
             </div>
         </div>
     </div>
