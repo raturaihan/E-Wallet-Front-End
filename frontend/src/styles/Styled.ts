@@ -23,7 +23,7 @@ export const BlueButton = styled.button({
     border: 'none', 
     color: 'white', 
     fontWeight: 'bold',
-    width: '360px',
+    width: '385px',
     height: '45px',
     borderRadius: '8px',
     backgroundColor: '#4ea5ea'
@@ -45,7 +45,6 @@ export const SearchBar = styled.input({
     height: '45px', 
     display: 'block',
     padding: '8px 2px 8px 40px', 
-    // backgroundImage: `url(${searchIcon})`
 })
 
 export const SelectShowType = styled.select({

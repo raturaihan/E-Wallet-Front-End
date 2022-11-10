@@ -7,14 +7,15 @@ interface modalSuccessDetails {
     amount: number,
     from: string,
     to: string,
-    description?: string
+    description?: string,
+    show?: boolean,
 }
 
 
-function ModalSuccess({typeTrans, amount, from, to, description}:modalSuccessDetails) {
+function ModalSuccess({typeTrans, amount, from, to, description, show}:modalSuccessDetails) {
   return (
     <div>
-        <div className="modal fade" id="exampleModal" tabIndex={-1} aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div className={`modal fade`} id="exampleModal" tabIndex={-1} aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div className="modal-dialog">
                 <div className="modal-content">
                 <div className="modal-body">
