@@ -7,14 +7,17 @@ import Transfer from './pages/Transfer';
 import Home from './pages/Home';
 import ProtectedRoutes from './routes/ProtectedRoute';
 import NotFound from './pages/NotFound';
+import UnprotectedRoutes from './routes/UnprotectedRoute';
 
 function App() {
 
   return (
     <div className="App">
       <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        <Route element={<UnprotectedRoutes />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Route>
         <Route element={<ProtectedRoutes />}>
           <Route path="/" element={<Home />} />
           <Route path="/topup" element={<Topup />} />

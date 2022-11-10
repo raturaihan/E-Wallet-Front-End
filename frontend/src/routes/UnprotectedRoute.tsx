@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import {Navigate, Outlet} from 'react-router-dom'; 
 
-const ProtectedRoutes = () => {
+const UnprotectedRoutes = () => {
     const [isLogin, setIsLogin] = useState<boolean>(false);
     const getIsLoginData = () => JSON.parse(localStorage.getItem('authentication') ? 'true' : 'false');
 
@@ -12,11 +12,11 @@ const ProtectedRoutes = () => {
         });
     }, []);
 
-    if (!getIsLoginData()) {
-        return <Navigate to='/login' />;
+    if (getIsLoginData()) {
+        return <Navigate to='/' />;
     }
 
     return <Outlet />;
 }
 
-export default ProtectedRoutes
+export default UnprotectedRoutes
