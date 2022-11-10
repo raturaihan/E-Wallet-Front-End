@@ -7,7 +7,7 @@ const initialState: ITopupState= {
         source_of_fund_id: 0,
     },
     topupLoading: true, 
-    topupError: null
+    topupError: "",
 }
 
 export default function topupReducer(state = initialState, action:TopupAction)

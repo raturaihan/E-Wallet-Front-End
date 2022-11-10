@@ -13,15 +13,18 @@ import {InputForm, BlueButton, AmountForm, SelectForm} from '../styles/Styled'
 function Topup() {
   const {user} = useSelector((state: RootState) => state.userReducer);
   const {topup, topupError, topupLoading} = useSelector((state: RootState) => state.topupReducer);
-  const dispatchUser: UsersDispatch= useDispatch()
-  console.log(topupError !== null)
-  useEffect(() => {
-    dispatchUser(getProfileUser())
-  }, [dispatchUser]);
+  const [modal, setModal] = useState(false)
 
-  const dispatch: TopupDispatch = useDispatch()
-  const [inputAmount, setInputAmount] = useState(0)
-  const [inputSelect, setInputSelect] = useState(0)
+  const dispatchUser: UsersDispatch= useDispatch()
+  const dispatchTopup : TopupDispatch=useDispatch()
+  
+  useEffect(() => {
+      dispatchUser(getProfileUser())
+      setModal(topupError === "")
+  },[topupError, dispatchUser])
+
+  const [inputAmount, setInputAmount] = useState(topup.amount)
+  const [inputSelect, setInputSelect] = useState(topup.source_of_fund_id)
 
   const handleSubmit = (
     event: React.FormEvent<HTMLFormElement>) => {
@@ -30,7 +33,7 @@ function Topup() {
           amount: inputAmount, 
           source_of_fund_id: inputSelect
         };
-        dispatch(postTopup(topupData))
+        dispatchTopup(postTopup(topupData))
     }
 
   function descriptionModal(input:number){
@@ -83,11 +86,9 @@ function Topup() {
                 </div>
             <div className='row mt-4'>
                 <BlueButton type="submit" data-bs-toggle="modal" data-bs-target="#exampleModal">Top Up</BlueButton>
-                {topupError !== null ? 
-                  <ModalFailed 
+                    {modal ? <ModalFailed 
                     transType='Top Up'
-                    error={topupError}/> 
-                    : <ModalSuccess 
+                    error={topupError}/> : <ModalSuccess 
                     typeTrans='Top Up'
                     amount={inputAmount}
                     from={'100'+inputSelect}

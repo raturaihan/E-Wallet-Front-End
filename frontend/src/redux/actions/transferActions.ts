@@ -13,7 +13,7 @@ export const setTransferLoading = (payload: boolean)
     return{type: TransferActionType.SET_TRANSFER_LOADING, payload}
 };  
 
-export const setTransferError = (payload: string | null)
+export const setTransferError = (payload: string)
 :TransferAction => {
     return{type: TransferActionType.SET_TRANSFER_ERROR, payload}
 }; 
@@ -21,13 +21,14 @@ export const setTransferError = (payload: string | null)
 export const postTransfer = (payload: ITransfer) => {
     return async(dispatch:Dispatch<TransferAction>) => {
         dispatch(setTransferLoading(true))
-        dispatch(setTransferError(null))
+        dispatch(setTransferError(""))
 
         await instance.post("/transactions/transfer",payload)
         .then((response) => {
             if(!response.data){
                 throw new Error('Failed to transfer')
             }
+            dispatch(setTransfer(response.data))
             return response.data
         })
         .catch((error) => dispatch(setTransferError(error.response.data.message)))

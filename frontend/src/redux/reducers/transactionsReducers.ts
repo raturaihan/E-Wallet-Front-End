@@ -4,7 +4,7 @@ import { ITransactionState } from "./typesReducers";
 const initialState: ITransactionState = {
     transactions: [],
     transactionsLoading: true,
-    transactionsError: null,
+    transactionsError: "",
 }
 
 export default function transactionsReducer(state = initialState, action:TransactionsAction)

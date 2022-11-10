@@ -13,7 +13,7 @@ export const setTopupLoading = (payload: boolean)
     return{type: TopupActionType.SET_TOPUP_LOADING, payload}
 };  
 
-export const setTopupError = (payload: string | null)
+export const setTopupError = (payload: string)
 :TopupAction => {
     return{type: TopupActionType.SET_TOPUP_ERROR, payload}
 }; 
@@ -21,13 +21,14 @@ export const setTopupError = (payload: string | null)
 export const postTopup = (payload: ITopup) => {
     return async(dispatch:Dispatch<TopupAction>) => {
         dispatch(setTopupLoading(true))
-        dispatch(setTopupError(null))
+        dispatch(setTopupError(""))
 
         await instance.post("/transactions/top-up",payload)
         .then((response) => {
             if(!response.data){
                 throw new Error('Failed to top up')
             }
+            dispatch(setTopup(response.data))
             return response.data
         })
         .catch((error) => {

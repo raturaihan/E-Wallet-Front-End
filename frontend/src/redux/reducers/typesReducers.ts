@@ -8,17 +8,17 @@ export interface IUserState {
 export interface ITransactionState {
     transactions: ITransaction[];
     transactionsLoading: boolean;
-    transactionsError: string | null;
+    transactionsError: string;
 }
 
 export interface ITransferState {
     transfer: ITransfer;
     transferLoading: boolean;
-    transferError: string | null;
+    transferError: string;
 }
 
 export interface ITopupState {
     topup: ITopup;
     topupLoading: boolean;
-    topupError: string | null;
+    topupError: string;
 }

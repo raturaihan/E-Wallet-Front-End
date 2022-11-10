@@ -46,7 +46,7 @@ export interface ISetTransactionsLoading {
 
 export interface ISetTransactionsError {
     type: TransactionsActionType.SET_TRANSACTIONS_ERROR;
-    payload: string | null
+    payload: string
 }
 
 export type TransactionsAction = ISetTransactions | ISetTransactionsLoading | ISetTransactionsError
@@ -71,7 +71,7 @@ export interface ISetTransferLoading {
 
 export interface ISetTransferError {
     type: TransferActionType.SET_TRANSFER_ERROR;
-    payload: string | null
+    payload: string
 }
 
 export type TransferAction = ISetTransfer | ISetTransferLoading | ISetTransferError
@@ -97,7 +97,7 @@ export interface ISetTopupLoading {
 
 export interface ISetTopupError {
     type: TopupActionType.SET_TOPUP_ERROR;
-    payload: string | null
+    payload: string
 }
 
 export type TopupAction = ISetTopup | ISetTopupLoading | ISetTopupError

@@ -8,25 +8,27 @@ import { postTransfer } from '../redux/actions/transferActions'
 import { TransferDispatch, UsersDispatch } from '../redux/actions/typesActions'
 import { getProfileUser } from '../redux/actions/userActions'
 import { RootState } from '../redux/reducers/indexReducers'
-import {InputForm, BlueButton, AmountForm, SelectForm} from '../styles/Styled'
+import {InputForm, BlueButton, AmountForm} from '../styles/Styled'
 
 function Transfer() {
   const {user} = useSelector((state: RootState) => state.userReducer);
-  const {transferError} = useSelector((state: RootState) => state.transferReducer);
+  const {transfer, transferError} = useSelector((state: RootState) => state.transferReducer);
+  const [modal, setModal] = useState(false)
+
   const dispatchUser: UsersDispatch= useDispatch()
-  const dispatch: TransferDispatch = useDispatch()
-  console.log(transferError)
+  const dispatchTransfer: TransferDispatch = useDispatch()
 
   useEffect(() => {
     dispatchUser(getProfileUser())
-  }, [dispatchUser]);
+    setModal(transferError === "")
+  }, [transferError,dispatchUser]);
 
   const [input, setInput] = useState({
-    transferTo: "",
-    description: ""
+    transferTo: transfer.to,
+    description: transfer.description
   })
 
-  const [inputAmount, setInputAmount] = useState(0)
+  const [inputAmount, setInputAmount] = useState(transfer.amount)
 
   const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
     setInput({
@@ -43,7 +45,7 @@ function Transfer() {
             amount: inputAmount, 
             description: input.description,
         };
-        dispatch(postTransfer(transferData))
+        dispatchTransfer(postTransfer(transferData))
     }
 
   return (
@@ -99,8 +101,7 @@ function Transfer() {
                 </div>
             <div className='row mt-4'>
                 <BlueButton type="submit" data-bs-toggle="modal" data-bs-target="#exampleModal">Send</BlueButton>
-                {/* <ModalFailed transType='tes' error={transferError}/> */}
-                {transferError !== null ? 
+                {modal? 
                   <ModalFailed 
                     transType='Transfer'
                     error={transferError}/> 

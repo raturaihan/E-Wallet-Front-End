@@ -8,7 +8,7 @@ const initialState: ITransferState= {
         description: ""
     },
     transferLoading: true, 
-    transferError: null
+    transferError: ""
 }
 
 export default function transferReducer(state = initialState, action:TransferAction)

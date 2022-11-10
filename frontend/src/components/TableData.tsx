@@ -22,7 +22,7 @@ function TableData() {
   console.log(transactions)
 
   function FilterShow(data: ITransaction[]) {
-    let filteredData:ITransaction[]
+    let filteredData
     switch(selectShowType){
         case "last-10-transactions":
             filteredData = data.slice(0,10);
@@ -47,7 +47,7 @@ function TableData() {
   }
 
   function FilterSortDate(data: ITransaction[]) {
-    let sortedData:ITransaction[];
+    let sortedData
     switch(selectSortType){
         case "ascending":
             sortedData = data.sort((a, b) => moment(a.date).isAfter(moment(b.date))?1:-1);
@@ -62,7 +62,7 @@ function TableData() {
   }
 
   function FilterSortAmount(data: ITransaction[]) {
-    let sortedData:ITransaction[];
+    let sortedData
     switch(selectSortType){
         case "ascending":
             sortedData = data.sort((a, b) => a.amount - b.amount);
@@ -115,6 +115,11 @@ function TableData() {
   }, [dispatchTrans]);
 
   useEffect(() => {
+    setDisplayData(transactions);
+    FilterData()
+  }, [transactionsLoading])
+
+  useEffect(() => {
     FilterData()
   }, [selectShowType, selectSortBy, selectSortType]);
 
@@ -124,8 +129,8 @@ function TableData() {
             <div className='col'>
                 <div className='d-flex justify-content-start gap-2 align-items-center'>
                 <label htmlFor="Show">Show</label>
-                <SelectShowType className="form-select" id="show_type" onChange={(e)=> {setSelectShowType(e.target.value)}}>
-                        <option value='last-10-transactions' selected>Last 10 transactions</option>
+                <SelectShowType className="form-select" id="show_type" onChange={(e)=> {setSelectShowType(e.target.value)}} value={selectShowType}>
+                        <option value='last-10-transactions'>Last 10 transactions</option>
                         <option value='this-month'>This month</option>
                         <option value='last-month'>Last month</option>
                         <option value='this-year'>This year</option>
@@ -136,15 +141,15 @@ function TableData() {
             <div className='col'>
                 <div className='d-flex justify-content-between gap-2'>
                 <label htmlFor="Show">Sort by</label>
-                <SelectForm className="form-select" id="sort_by" onChange={(e) => {setSelectSortBy(e.target.value)}}>
+                <SelectForm className="form-select" id="sort_by" onChange={(e) => {setSelectSortBy(e.target.value)}} value={selectSortBy}>
                         <option value='date' selected>Date</option>
                         <option value='amount'>Amount</option>
                 </SelectForm>
-                <SelectForm className="form-select" id="sort_type" onChange={(e) => {setSelectSortType(e.target.value)}}>
+                <SelectForm className="form-select" id="sort_type" onChange={(e) => {setSelectSortType(e.target.value)}} value={selectSortType}>
                         <option value='ascending'>Ascending</option>
                         <option value='descending' selected>Descending</option>
                 </SelectForm>
-                <SearchBar type='text' placeholder='search...' onChange={(e) => {setSearchValue(e.target.value)}}/>
+                <SearchBar type='text' placeholder='search...' onChange={(e) => {setSearchValue(e.target.value)}} value={searchValue}/>
                 </div>
             </div>
         </div>

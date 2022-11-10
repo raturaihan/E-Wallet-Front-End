@@ -33,9 +33,7 @@ function ModalFailed({transType, error}: modalFailedDetails) {
                         </div>
                         <div className='row my-3'>
                             <div className='d-flex justify-content-center gap-4'>
-                                <Link to={'/home'} className='text-decoration-none'>
-                                    <ModalButton type="button" className="btn" data-bs-dismiss="modal">Close</ModalButton>
-                                </Link>
+                                <ModalButton type="button" className="btn" data-bs-dismiss="modal">Close</ModalButton>
                             </div>
                         </div>
                     </div>

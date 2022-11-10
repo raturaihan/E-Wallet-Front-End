@@ -13,7 +13,7 @@ export const getTransactionsLoading = (payload: boolean)
     return{type: TransactionsActionType.SET_TRANSACTIONS_LOADING, payload}
 };
 
-export const getTransactionsError = (payload: string | null)
+export const getTransactionsError = (payload: string)
 :TransactionsAction => {
     return{type: TransactionsActionType.SET_TRANSACTIONS_ERROR, payload}
 };
@@ -21,7 +21,7 @@ export const getTransactionsError = (payload: string | null)
 export const getAllTransactions = () => {
     return async(dispatch: Dispatch<TransactionsAction>) => {
         dispatch(getTransactionsLoading(true))
-        dispatch(getTransactionsError(null))
+        dispatch(getTransactionsError(""))
 
         await instance.get("/transactions")
         .then((response) => {
