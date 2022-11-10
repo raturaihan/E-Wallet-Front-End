@@ -9,6 +9,9 @@ import {SelectForm, SearchBar, SelectShowType} from '../styles/Styled'
 import { ITransaction } from '../interface';
 
 function TableData() {
+  const formatBalance = (balance: number) => {
+    return balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  }
   const {transactions, transactionsLoading, transactionsError} = useSelector((state: RootState) => state.transactionsReducer);
  
   const [displayData, setDisplayData] = useState(transactions)
@@ -115,10 +118,9 @@ function TableData() {
 
   function formatAmount(transType:string, amount:number) {
     if(transType == "INCOME"){
-        return <p className='text-success'>+{amount}</p>
+        return <p className='text-success'>+{formatBalance(amount)}</p>
     }else if(transType == "OUTCOME"){
-        amount = amount * (-1)
-        return <p className='text-danger'>{amount}</p>
+        return <p className='text-danger'>-{formatBalance(amount)}</p>
     }
   }
 

@@ -8,9 +8,14 @@ import { TransactionsDispatch, UsersDispatch } from '../redux/actions/typesActio
 import { getProfileUser } from '../redux/actions/userActions'
 import { RootState } from '../redux/reducers/indexReducers'
 
+
 function Home() {
   const {user, userLoading, userError} = useSelector((state: RootState) => state.userReducer);
   const dispatch: UsersDispatch= useDispatch()
+
+  const formatBalance = (balance: number) => {
+    return balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  }
 
   useEffect(() => {
     dispatch(getProfileUser())
@@ -26,7 +31,7 @@ function Home() {
                 <HomeProfile 
                 name={user.name}
                 wallet_number={user.wallet_number}
-                balance={user.balance}/>
+                balance={formatBalance(user.balance)}/>
             </div>
             <div className='row mt-5'>
               <TableData />

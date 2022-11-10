@@ -1,7 +1,13 @@
 import React from 'react'
 import { IUser } from '../interface'
 
-function HomeProfile({name, wallet_number, balance}: IUser) {
+interface profileUser{
+    name: string,
+    wallet_number: string,
+    balance: string,
+}
+
+function HomeProfile({name, wallet_number, balance}: profileUser) {
   return (
     <div>
         <div className='container'>
