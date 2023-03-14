@@ -1,4 +1,4 @@
-# Assignment React Starter
+# E-Wallet React Front End
 
 ## Project Description
 The purpose of this project is to create the front-end implementation of an e-wallet application. 
